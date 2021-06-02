@@ -25,7 +25,24 @@ func TestServicesList(t *testing.T) {
 		t.Errorf("returned \n\n%#v want \n\n%#v", resp, validListServicesResponse)
 	}
 }
+func TestServicesListContentBasedGrouping(t *testing.T) {
+	setup()
+	defer teardown()
 
+	mux.HandleFunc("/services", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		w.Write([]byte(validListServicesContentGroupingJSON))
+	})
+
+	resp, _, err := client.Services.List(&ListServicesOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(resp, validListServicesContentGroupingResponse) {
+		t.Errorf("returned \n\n%#v want \n\n%#v", resp, validListServicesResponse)
+	}
+}
 func TestServicesCreate(t *testing.T) {
 	setup()
 	defer teardown()

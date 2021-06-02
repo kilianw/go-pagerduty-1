@@ -132,6 +132,32 @@ const (
   "total": null,
   "more": false
 }`
+	validListServicesContentGroupingJSON = `{
+  "services": [
+    {
+      "id": "PIJ90N7",
+      "summary": "My Application Service",
+      "type": "service",
+      "self": "https://api.pagerduty.com/services/PIJ90N7",
+      "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+      "name": "My Application Service",
+      "description": null,
+      "auto_resolve_timeout": 14400,
+      "acknowledgement_timeout": 600,
+      "created_at": "2015-11-06T11:12:51-05:00",
+      "status": "active",
+      "last_incident_timestamp": null,
+      "alert_creation": "create_alerts_and_incidents",
+      "alert_grouping": "rules",
+      "alert_grouping_timeout": null,
+      "alert_grouping_rules":{"fields":["custom_details.field1"],"aggregate":"all"}
+    }
+  ],
+  "limit": 25,
+  "offset": 0,
+  "total": null,
+  "more": false
+}`
 )
 
 var (
@@ -139,14 +165,15 @@ var (
 	defaultAutoResolveTimeout                = 14400
 	defaultPosition                          = 0
 
-	ag                        = "intelligent"
+	agIntelligent             = "intelligent"
+	agRules                   = "rules"
 	validListServicesResponse = &ListServicesResponse{
 		Services: []*Service{
 			&Service{
 				AcknowledgementTimeout: &defaultTestServiceAcknowledgementTimeout,
 				Addons:                 nil,
 				AlertCreation:          "create_alerts_and_incidents",
-				AlertGrouping:          &ag,
+				AlertGrouping:          &agIntelligent,
 				AlertGroupingTimeout:   nil,
 				AutoResolveTimeout:     &defaultAutoResolveTimeout,
 				CreatedAt:              "2015-11-06T11:12:51-05:00",
@@ -213,6 +240,30 @@ var (
 					},
 				},
 				Type: "service",
+			},
+		},
+		Limit: 25,
+	}
+	validListServicesContentGroupingResponse = &ListServicesResponse{
+		Services: []*Service{
+			{
+				AlertGrouping:          &agRules,
+				AlertGroupingRules:     &AlertGroupingRules{Aggregate: "all",Fields: []string{"custom_details.field1"}},
+				AcknowledgementTimeout: &defaultTestServiceAcknowledgementTimeout,
+				Addons:                 nil,
+				AlertCreation:          "create_alerts_and_incidents",
+				AlertGroupingTimeout:   nil,
+				AutoResolveTimeout:     &defaultAutoResolveTimeout,
+				CreatedAt:              "2015-11-06T11:12:51-05:00",
+				Description:            "",
+				HTMLURL:               "https://subdomain.pagerduty.com/services/PIJ90N7",
+				ID:                    "PIJ90N7",
+				LastIncidentTimestamp: "",
+				Name:                  "My Application Service",
+				Self:                  "https://api.pagerduty.com/services/PIJ90N7",
+				Status:                "active",
+				Summary:               "My Application Service",
+				Type:                  "service",
 			},
 		},
 		Limit: 25,

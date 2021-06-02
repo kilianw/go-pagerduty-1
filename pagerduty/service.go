@@ -42,6 +42,12 @@ type IncidentUrgencyRule struct {
 	Urgency             string               `json:"urgency,omitempty"`
 }
 
+// AlertGroupingRules is the configuration for content-based alert grouping
+type AlertGroupingRules struct {
+	Aggregate string   `json:"aggregate,omitempty"`
+	Fields    []string `json:"fields,omitempty"`
+}
+
 // Integration represents a service integration.
 type Integration struct {
 	CreatedAt        string            `json:"created_at,omitempty"`
@@ -65,6 +71,7 @@ type Service struct {
 	AlertCreation          string                     `json:"alert_creation,omitempty"`
 	AlertGrouping          *string                    `json:"alert_grouping"`
 	AlertGroupingTimeout   *int                       `json:"alert_grouping_timeout,omitempty"`
+	AlertGroupingRules     *AlertGroupingRules        `json:"alert_grouping_rules,omitempty"`
 	AutoResolveTimeout     *int                       `json:"auto_resolve_timeout"`
 	CreatedAt              string                     `json:"created_at,omitempty"`
 	Description            string                     `json:"description,omitempty"`
